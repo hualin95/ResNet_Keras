@@ -6,8 +6,8 @@
 # @Software: PyCharm
 
 from data.dataload import dataload
-#from models.ResNet50 import ResNet50
-from models.ResNet50_cl import ResNet50
+from models.ResNet50 import ResNet50
+# from models.ResNet50_cl import ResNet50
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES']='0'

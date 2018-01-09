@@ -45,8 +45,8 @@ def identity_block(X, f, filters, stage, block):
                strides=(1, 1), padding='valid',
                name=conv_name_base + '2a',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
-    X = BatchNormalization(axis=1,
+               data_format = 'channels_last')(X)
+    X = BatchNormalization(axis=3,
                            name=bn_name_base + '2a')(X)
     X = Activation('relu')(X)
 
@@ -57,8 +57,8 @@ def identity_block(X, f, filters, stage, block):
                padding='same',
                name=conv_name_base + '2b',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
-    X = BatchNormalization(axis=1,
+               data_format = 'channels_last')(X)
+    X = BatchNormalization(axis=3,
                            name=bn_name_base + '2b')(X)
     X = Activation('relu')(X)
 
@@ -68,8 +68,8 @@ def identity_block(X, f, filters, stage, block):
                strides=(1, 1), padding='valid',
                name=conv_name_base + '2c',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
-    X = BatchNormalization(axis=1,
+               data_format = 'channels_last')(X)
+    X = BatchNormalization(axis=3,
                            name=bn_name_base + '2c')(X)
 
     # Final step: Add shortcut value to main path, and pass it through a RELU activation
@@ -114,7 +114,7 @@ def convolutional_block(X, f, filters, stage, block, s=2):
                strides=(s, s),
                name=conv_name_base + '2a',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
+               data_format = 'channels_last')(X)
     X = BatchNormalization(axis=1, name=bn_name_base + '2a')(X)
     X = Activation('relu')(X)
 
@@ -125,7 +125,7 @@ def convolutional_block(X, f, filters, stage, block, s=2):
                padding='same',
                name=conv_name_base + '2b',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
+               data_format = 'channels_last')(X)
     X = BatchNormalization(axis=1, name=bn_name_base + '2b')(X)
     X = Activation('relu')(X)
 
@@ -136,7 +136,7 @@ def convolutional_block(X, f, filters, stage, block, s=2):
                padding='valid',
                name=conv_name_base + '2c',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
+               data_format = 'channels_last')(X)
     X = BatchNormalization(axis=1, name=bn_name_base + '2c')(X)
 
     ##### SHORTCUT PATH ####
@@ -146,7 +146,7 @@ def convolutional_block(X, f, filters, stage, block, s=2):
                         padding='valid',
                         name=conv_name_base + '1',
                         kernel_initializer=glorot_uniform(seed=0),
-                        data_format = 'channels_first')(X_shortcut)
+                        data_format = 'channels_last')(X_shortcut)
     X_shortcut = BatchNormalization(axis=1, name=bn_name_base + '1')(X_shortcut)
 
     # Final step: Add shortcut value to main path, and pass it through a RELU activation
@@ -157,7 +157,7 @@ def convolutional_block(X, f, filters, stage, block, s=2):
 
 
 
-def ResNet50(input_shape=(3, 32, 32), classes=10):
+def ResNet50(input_shape=(32, 32, 3), classes=10):
     """
     Implementation of the popular ResNet50 the following architecture:
     CONV2D -> BATCHNORM -> RELU -> MAXPOOL -> CONVBLOCK -> IDBLOCK*2 -> CONVBLOCK -> IDBLOCK*3
@@ -175,17 +175,17 @@ def ResNet50(input_shape=(3, 32, 32), classes=10):
     X_input = Input(input_shape)
 
     # Zero-Padding
-    X = ZeroPadding2D((3, 3),data_format = 'channels_first')(X_input)
+    X = ZeroPadding2D((3, 3),data_format = 'channels_last')(X_input)
 
     # Stage 1
     X = Conv2D(64, (7, 7),
                strides=(2, 2),
                name='conv1',
                kernel_initializer=glorot_uniform(seed=0),
-               data_format = 'channels_first')(X)
+               data_format = 'channels_last')(X)
     X = BatchNormalization(axis=1, name='bn_conv1')(X)
     X = Activation('relu')(X)
-    X = MaxPooling2D((3, 3), strides=(2, 2),data_format = 'channels_first')(X)
+    X = MaxPooling2D((3, 3), strides=(2, 2),data_format = 'channels_last')(X)
 
     # Stage 2
     X = convolutional_block(X, f=3, filters=[64, 64, 256], stage=2, block='a', s=1)
@@ -212,7 +212,7 @@ def ResNet50(input_shape=(3, 32, 32), classes=10):
     X = identity_block(X, 3, [512, 512, 2048], stage=5, block='c')
 
     # AVGPOOL
-    X = AveragePooling2D((2, 2), name='avg_pool',data_format = 'channels_first')(X)
+    X = AveragePooling2D((2, 2), name='avg_pool',data_format = 'channels_last')(X)
 
     # output layer
     X = Flatten()(X)
