@@ -6,12 +6,12 @@
 # @Software: PyCharm
 
 from data.dataload import dataload
-from models.ResNet50 import ResNet50
-from models.ResNet50 import ResNet50_cl
+#from models.ResNet50 import ResNet50
+from models.ResNet50_cl import ResNet50
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES']='0'
-model = ResNet50_cl(input_shape=(32, 32, 3), classes=10)
+model = ResNet50(input_shape=(32, 32, 3), classes=10)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 #load data:cifar10
