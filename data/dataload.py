@@ -13,7 +13,10 @@ import tensorflow as tf
 def dataload():
     (X_train_orig, Y_train_orig), (X_test_orig, Y_test_orig) = cifar10.load_data()
     classes = 10
-
+    print("X_train shape: " + str(X_train_orig.shape))
+    print("Y_train shape: " + str(Y_train_orig.shape))
+    print("X_test shape: " + str(X_test_orig.shape))
+    print("Y_test shape: " + str(Y_test_orig.shape))
     # Normalize image vectors
     X_train = X_train_orig / 255.
     X_test = X_test_orig / 255.
