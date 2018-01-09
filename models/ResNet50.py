@@ -212,7 +212,7 @@ def ResNet50(input_shape=(32, 32, 3), classes=10):
     X = identity_block(X, 3, [512, 512, 2048], stage=5, block='c')
 
     # AVGPOOL
-    X = AveragePooling2D((2, 2), name='avg_pool',data_format = 'channels_last')(X)
+    X = AveragePooling2D((1, 1), name='avg_pool',data_format = 'channels_last')(X)
 
     # output layer
     X = Flatten()(X)

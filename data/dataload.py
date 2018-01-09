@@ -7,6 +7,7 @@
 
 from keras.datasets import cifar10
 import tensorflow as tf
+from keras.utils import np_utils
 
 
 
@@ -22,8 +23,8 @@ def dataload():
     X_test = X_test_orig / 255.
 
     # Convert training and test labels to one hot matrices
-    Y_train = tf.one_hot(Y_train_orig, 10, axis=0)
-    Y_test = tf.one_hot(Y_test_orig, 10, axis=0)
+    Y_train = np_utils.to_categorical(Y_train_orig, classes)
+    Y_test = np_utils.to_categorical(Y_test_orig, classes)
 
     print("number of training examples = " + str(X_train.shape[0]))
     print("number of test examples = " + str(X_test.shape[0]))
