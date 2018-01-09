@@ -158,7 +158,7 @@ def ResNet50(input_shape=(32, 32, 3), classes=10):
                strides=(2, 2),
                name='conv1',
                kernel_initializer=glorot_uniform(seed=0))(X)
-    X = BatchNormalization(axis=1, name='bn_conv1')(X)
+    X = BatchNormalization(axis=3, name='bn_conv1')(X)
     X = Activation('relu')(X)
     X = MaxPooling2D((3, 3), strides=(2, 2))(X)
 
