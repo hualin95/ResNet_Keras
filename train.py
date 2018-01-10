@@ -4,7 +4,7 @@
 # @Email   : linhua2017@ia.ac.cn
 # @File    : train.py
 # @Software: PyCharm
-
+import numpy as np
 from data.dataload import dataload
 from models.ResNet50 import ResNet50
 # from models.ResNet50_cl import ResNet50
@@ -22,7 +22,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 X_train, Y_train, X_test, Y_test = dataload()
 
 
-model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=100, batch_size=32,show_accuracy = True,
+model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=100, batch_size=32,
           shuffle=True,
           callbacks=[lr_reducer, early_stopper])
 
