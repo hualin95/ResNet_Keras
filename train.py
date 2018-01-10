@@ -9,6 +9,10 @@ from data.dataload import dataload
 from models.ResNet50 import ResNet50
 # from models.ResNet50_cl import ResNet50
 import os
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping
+
+lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1), cooldown=0, patience=5, min_lr=0.5e-6)
+early_stopper = EarlyStopping(min_delta=0.001, patience=10)
 
 os.environ['CUDA_VISIBLE_DEVICES']='0'
 model = ResNet50(input_shape=(32, 32, 3), classes=10)
@@ -18,7 +22,9 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 X_train, Y_train, X_test, Y_test = dataload()
 
 
-model.fit(X_train, Y_train, epochs=20, batch_size=32)
+model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=100, batch_size=32,show_accuracy = True,
+          shuffle=True,
+          callbacks=[lr_reducer, early_stopper])
 
 preds = model.evaluate(X_test, Y_test)
 print("Loss = " + str(preds[0]))
