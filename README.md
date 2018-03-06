@@ -7,6 +7,7 @@ ResNet_Keras is a implementation of ResNet-50 by Keras with Tensorflow backend w
 
 # Network Structure
 [ResNet-50](http://ethereon.github.io/netscope/#/gist/db945b393d40bfa26006)
+
 ![](https://github.com/hualin95/ResNet_Keras/blob/master/docs/resnet.jpg)
 
 # Cifar-10 Example
