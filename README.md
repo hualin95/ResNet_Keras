@@ -1,4 +1,4 @@
-![](https://github.com/hualin95/YOLO_v1/blob/master/docs/logo.png)
+![](https://github.com/hualin95/ResNet_Keras/blob/master/docs/logo.png)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hualin95/Everyone_Is_Van_Gogh/blob/master/LICENSE) 
 ![Build Status](https://img.shields.io/appveyor/ci/gruntjs/grunt/master.svg)
 # ResNet_Keras
@@ -7,6 +7,7 @@ ResNet_Keras is a implementation of ResNet-50 by Keras with Tensorflow backend w
 
 # Network Structure
 [ResNet-50](http://ethereon.github.io/netscope/#/gist/db945b393d40bfa26006)
+![](https://github.com/hualin95/ResNet_Keras/blob/master/docs/resnet.jpg)
 
 # Cifar-10 Example
 To train this dataset, you have to download the images from [here](http://www.cs.toronto.edu/~kriz/cifar.html).
